@@ -58,8 +58,6 @@ public class MainActivity extends AppCompatActivity implements FetchCountriesTas
 
         // adding item touch helper
         // only ItemTouchHelper.LEFT added to detect Right to Left swipe
-        // if you want both Right -> Left and Left -> Right
-        // add pass ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT as param
         ItemTouchHelper.SimpleCallback itemTouchHelperCallback =
                 new RecyclerItemTouchHelper(ItemTouchHelper.LEFT, ItemTouchHelper.LEFT, this);
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
@@ -68,8 +66,6 @@ public class MainActivity extends AppCompatActivity implements FetchCountriesTas
 
     @Override
     public void onLoadComplete(CountriesResponse response) {
-        Log.e("CountriesResponse", "CountriesResponse - " + response.toString());
-
         recyclerView.setVisibility(View.VISIBLE);
         textView.setVisibility(View.GONE);
 
@@ -82,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements FetchCountriesTas
 
     @Override
     public void onError() {
-        Log.e("onError", "onError: ");
         recyclerView.setVisibility(View.GONE);
         textView.setVisibility(View.VISIBLE);
 

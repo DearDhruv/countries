@@ -1,7 +1,6 @@
 package com.deardhruv.countries.adapter;
 
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -49,11 +48,6 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
         final View foregroundView = ((CountryListAdapter.CountryViewHolder) viewHolder).viewForeground;
         getDefaultUIUtil().onDrawOver(c, recyclerView, foregroundView, dX, dY,
                 actionState, isCurrentlyActive);
-
-        Log.e(TAG, "onChildDrawOver: actionState = " + actionState);
-
-//        Log.e(TAG, "onChildDrawOver: SELECTED = " + selected);
-//        Log.e(TAG, "onChildDrawOver: POSITION = " + viewHolder.getAdapterPosition());
 
         if (actionState == ACTION_STATE_SWIPE) {
             setTouchListener(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
