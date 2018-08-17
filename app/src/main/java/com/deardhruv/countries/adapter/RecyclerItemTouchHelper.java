@@ -1,7 +1,6 @@
 package com.deardhruv.countries.adapter;
 
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -13,8 +12,6 @@ import static androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE;
 import static androidx.recyclerview.widget.ItemTouchHelper.LEFT;
 
 public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
-    public static final String TAG = RecyclerItemTouchHelper.class.getSimpleName();
-
     private RecyclerItemTouchHelperListener listener;
     private static final float buttonWidth = 300;
 
@@ -48,7 +45,11 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
         if (actionState == ACTION_STATE_SWIPE) {
             setTouchListener(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-            ((CountryListAdapter.CountryViewHolder) viewHolder).viewBackground.setOnClickListener(null);
+        } else {
+            if (viewHolder.getAdapterPosition() == -1) {
+                return;
+            }
+            onSwiped(viewHolder, LEFT);
         }
     }
 
@@ -74,7 +75,6 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
                                       final RecyclerView.ViewHolder viewHolder,
                                       final float dX, final float dY, final int actionState,
                                       final boolean isCurrentlyActive) {
-
         //noinspection AndroidLintClickableViewAccessibility
         recyclerView.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -89,16 +89,9 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
         //noinspection AndroidLintClickableViewAccessibility
         recyclerView.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_UP) {
-
-                final View foregroundView = ((CountryListAdapter.CountryViewHolder) viewHolder).viewForeground;
-                getDefaultUIUtil().onDrawOver(c, recyclerView, foregroundView, dX, dY,
-                        actionState, isCurrentlyActive);
-
-                // RecyclerItemTouchHelper.super.onChildDraw(c, recyclerView, viewHolder, 0F, dY, actionState, isCurrentlyActive);
+                onSwiped(viewHolder, LEFT);
                 //noinspection AndroidLintClickableViewAccessibility
                 recyclerView.setOnTouchListener((v1, event1) -> false);
-
-
             }
             return false;
         });
