@@ -9,7 +9,7 @@
         android:id="@+id/view_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/holo_red_light"
+        android:background="#800080"
         android:clickable="true"
         android:focusable="true">
 
